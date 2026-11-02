@@ -181,7 +181,6 @@ struct Parser {
                 if (c == '-' || (c >= '0' && c <= '9')) return parseNumber();
                 fail(std::string("意外的字符 '") + c + "'");
         }
-        return JsonValue::makeNull(); // 不可达
     }
 
     JsonValue parseObject() {

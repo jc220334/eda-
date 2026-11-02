@@ -6,6 +6,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+if(MSVC)
+    add_compile_options(/utf-8 /W4 /permissive-)
+else()
+    add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
@@ -16,12 +22,6 @@ add_executable(validate_design
     tools/json_lite.hpp
 )
 target_include_directories(validate_design PRIVATE tools)
-
-if(MSVC)
-    target_compile_options(validate_design PRIVATE /W4 /permissive- /utf-8)
-else()
-    target_compile_options(validate_design PRIVATE -Wall -Wextra -Wpedantic)
-endif()
 
 set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT validate_design)
 
