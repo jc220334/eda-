@@ -1,24 +1,44 @@
-cmake_minimum_required(VERSION 3.16)
-project(PcbCore CXX)
+cmake_minimum_required(VERSION 3.24)
+
+project(EdaCourse VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-# 核心库：数据模型（header-only）+ JSON + 文件读写
+# ==================== 网表 / 设计校验器 ====================
+add_executable(validate_design
+    tools/validate_design.cpp
+    tools/json_lite.hpp
+)
+target_include_directories(validate_design PRIVATE tools)
+
+if(MSVC)
+    target_compile_options(validate_design PRIVATE /W4 /permissive- /utf-8)
+else()
+    target_compile_options(validate_design PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT validate_design)
+
+# ==================== PCB 核心数据模型与持久化 ====================
 add_library(pcbcore STATIC
     src/io/Json.cpp
     src/io/ProjectIO.cpp
 )
 target_include_directories(pcbcore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-# 测试程序
 add_executable(pcbtests tests/test_main.cpp)
 target_link_libraries(pcbtests PRIVATE pcbcore)
 
-# 集成演示程序
 add_executable(pcbdemo app/main.cpp)
 target_link_libraries(pcbdemo PRIVATE pcbcore)
+
+# ==================== 测试 ====================
+enable_testing()
+add_test(NAME validate_design_samples COMMAND validate_design "${CMAKE_CURRENT_SOURCE_DIR}")
+add_test(NAME pcbtests COMMAND pcbtests)
