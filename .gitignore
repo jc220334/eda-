@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Visual Studio
 .vs/
 *.user
@@ -8,30 +7,26 @@
 build/
 out/
 CMakeUserPresets.json
-
-# Runtime output
-*.log
-*.tmp
-=======
-# ===== 构建产物（不入库）=====
-build/
 *.o
 *.obj
 *.a
 *.lib
 *.exe
 
-# ===== 第三方预编译库（wxWidgets 安装产物，队友各自按需编译）=====
+# Runtime output
+*.log
+*.tmp
+
+# 第三方预编译库（wxWidgets 安装产物）
 third_party/
 
-# ===== 运行生成的工程文件（示例见 samples/）=====
+# 运行生成的工程文件（示例见 samples/）
 *.pcbproj
 !samples/*.pcbproj
 
-# ===== 编辑器 / 系统 =====
+# 编辑器 / 系统
 .vscode/
 .idea/
 *.swp
 Thumbs.db
 .DS_Store
->>>>>>> cc4bab9 (PCB 核心数据模型与持久化：数据模型、图层管理、文件读写、测试)
