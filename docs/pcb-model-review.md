@@ -27,11 +27,11 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 
 ### 2.1 坐标
 
-- 内部坐标统一使用 `int64_t` 微米。
-- 1 mm = 1000 个内部单位。
-- JSON 坐标字段使用整数，单位为 `um`。
-- 界面以毫米显示，保留三位小数。
-- 导出其他格式前才转换为对应单位。
+- 当前 C++ 核心模型统一使用 `double` 毫米。
+- 外部封装库 JSON 使用整数微米，导入时除以 1000 转换为毫米。
+- PCB 工程文件默认保存毫米，也可按工程单位保存为 mil 或 inch。
+- 显示层可转换为屏幕像素，但模型本身不保存像素坐标。
+- 导出其他格式前再执行单位换算。
 
 ### 2.2 角度
 
@@ -59,7 +59,7 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | `name` | string | 用户可读名称 |
 | `category` | string | 类别，例如 `IC`、`Resistor` |
 | `description` | string | 说明 |
-| `origin` | PointUm | 封装局部原点 |
+| `origin` | PointMm | 封装局部原点 |
 | `pads` | Pad[] | 焊盘或安装孔 |
 | `graphics` | Graphic[] | 丝印、文本等非焊接图形 |
 
@@ -73,7 +73,7 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | `pin` | string/null | 对应电气引脚；安装孔可以为空 |
 | `name` | string | 显示名称 |
 | `shape` | enum | `rect`、`circle`、`oval`、`polygon` |
-| `center` | PointUm | 相对封装原点的位置 |
+| `center` | PointMm | 相对封装原点的位置 |
 | `size` | SizeUm | 外接尺寸 |
 | `rotation_mdeg` | int | 局部旋转 |
 | `layer_set` | string[] | 单层铜或 `*.Cu` |
@@ -81,7 +81,7 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | `drill_um` | integer | 钻孔直径，无孔时为 0 |
 | `solder_mask_expand_um` | integer | 阻焊开窗扩展量 |
 | `copper_clearance_um` | integer | 默认铜间距 |
-| `outline` | PointUm[] | `polygon` 焊盘轮廓，可省略 |
+| `outline` | PointMm[] | `polygon` 焊盘轮廓，可省略 |
 
 多个焊盘可以共享同一个 `pin`，因此不能假设“引脚编号等于焊盘 ID”。
 
@@ -107,7 +107,7 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | --- | --- | --- |
 | `id` | string | 工程 ID |
 | `name` | string | 工程名 |
-| `outline` | PointUm[] | 闭合板框，首尾点相同，不允许自交 |
+| `outline` | PointMm[] | 闭合板框，首尾点相同，不允许自交 |
 | `layers` | LayerDefinition[] | 工程层定义 |
 | `layerGroups` | LayerGroup[] | 层组关系 |
 | `components` | ComponentInstance[] | 已放置元件 |
@@ -124,7 +124,7 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | `id` | string | 板上唯一元件实例 ID |
 | `ref` | string | 唯一位号 |
 | `footprint` | string | 封装库 ID |
-| `position` | PointUm | 封装原点在板上的位置 |
+| `position` | PointMm | 封装原点在板上的位置 |
 | `rotation_mdeg` | int | 元件旋转 |
 | `side` | enum | `top` 或 `bottom` |
 | `locked` | boolean | 是否禁止移动 |
@@ -166,7 +166,7 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | `net` | string | 所属网络 |
 | `layer` | string | 所在层 |
 | `widthUm` | integer | 线宽 |
-| `points` | PointUm[] | 至少两个连续点 |
+| `points` | PointMm[] | 至少两个连续点 |
 
 一轮连续布线的多个拐点放在同一个 TrackSegment 中，便于整体选择、删除和撤销。
 
@@ -176,7 +176,7 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | --- | --- | --- |
 | `id` | string | 过孔 ID |
 | `net` | string | 所属网络 |
-| `position` | PointUm | 中心位置 |
+| `position` | PointMm | 中心位置 |
 | `outerDiameterUm` | integer | 外径 |
 | `drillDiameterUm` | integer | 钻孔直径 |
 | `fromLayer` | string | 起始层 |
@@ -191,8 +191,8 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | `id` | string | 敷铜 ID |
 | `net` | string | 连接网络 |
 | `layer` | string | 所属层 |
-| `outer` | PointUm[] | 闭合外边界 |
-| `holes` | PointUm[][] | 可选的封闭孔洞或避让边界 |
+| `outer` | PointMm[] | 闭合外边界 |
+| `holes` | PointMm[][] | 可选的封闭孔洞或避让边界 |
 | `clearanceUm` | integer | 与不同网络对象的最小间距 |
 | `fillMode` | enum | `solid` 或 `hatch` |
 
@@ -259,7 +259,7 @@ PCB 不复制一份封装焊盘几何。板上的焊盘位置由“封装局部�
 | 网络是否写入共享封装库 | 不写入，只写入板级 Connection |
 | 引脚编号是否强制为整数 | 不强制，统一使用字符串 |
 | 一个引脚能否有多个焊盘 | 可以，通过相同 `pin` 关联 |
-| 坐标是否使用 double 毫米 | 不使用，内部采用整数微米 |
+| 坐标是否使用 double 毫米 | 使用；外部微米库在导入时转换为毫米 |
 | 是否保存飞线 | 不保存，根据 Connection 和实际走线派生 |
 | 导入是否允许部分成功 | 不允许，阻塞错误导致整个导入失败 |
 | 是否直接支持商业网表和封装格式 | v1 不支持，先定义并实现本课程格式 |

@@ -186,6 +186,7 @@ JsonValue componentToJson(const Component& c, double scale) {
     o.set("position",    pointToJson(c.position, scale));
     o.set("rotation",    JsonValue::makeNumber(c.rotation));
     o.set("onTop",       JsonValue::makeBool(c.onTop));
+    o.set("locked",      JsonValue::makeBool(c.locked));
     JsonValue arr = JsonValue::makeArray();
     for (const auto& pn : c.padNets) arr.push(padNetToJson(pn));
     o.set("padNets", arr);
@@ -199,6 +200,7 @@ Component componentFromJson(const JsonValue& o, double scale, const std::string&
     c.position = pointFromJson(o.get("position"), scale, where);
     c.rotation = numField(o, "rotation");
     c.onTop = boolField(o, "onTop", true);
+    c.locked = boolField(o, "locked", false);
     if (o.has("padNets"))
         for (std::size_t i = 0; i < o.get("padNets").size(); ++i)
             c.padNets.push_back(padNetFromJson(o.get("padNets").at(i), where));
@@ -259,6 +261,11 @@ JsonValue pourToJson(const CopperPour& p, double scale) {
     o.set("net",     JsonValue::makeString(p.netId));
     o.set("layer",   JsonValue::makeString(p.layerId));
     o.set("outline", pointsToJson(p.outline, scale));
+    o.set("clearance", JsonValue::makeNumber(p.clearance * scale));
+    JsonValue holes = JsonValue::makeArray();
+    for (const auto& hole : p.holes)
+        holes.push(pointsToJson(hole, scale));
+    o.set("holes", holes);
     return o;
 }
 CopperPour pourFromJson(const JsonValue& o, double scale, const std::string& where) {
@@ -267,6 +274,10 @@ CopperPour pourFromJson(const JsonValue& o, double scale, const std::string& whe
     p.netId = strField(o, "net");
     p.layerId = strField(o, "layer");
     p.outline = pointsFromJson(o.get("outline"), scale, where);
+    p.clearance = numField(o, "clearance", 0.25 / scale) * scale;
+    if (o.has("holes"))
+        for (std::size_t i = 0; i < o.get("holes").size(); ++i)
+            p.holes.push_back(pointsFromJson(o.get("holes").at(i), scale, where + ".holes"));
     if (p.id.empty()) fail(where, "敷铜缺少 id");
     return p;
 }

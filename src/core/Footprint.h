@@ -58,12 +58,13 @@ struct Component {
     Point position;             // 放置位置（mm）
     double rotation = 0.0;      // 旋转角（度）
     bool onTop = true;          // true=顶层，false=底层
+    bool locked = false;        // 是否禁止交互式移动
     std::vector<PadNet> padNets; // 焊盘与网络的关系
 
     bool operator==(const Component& o) const {
         return id == o.id && footprintId == o.footprintId &&
                reference == o.reference && position == o.position &&
-               near(rotation, o.rotation) && onTop == o.onTop &&
+               near(rotation, o.rotation) && onTop == o.onTop && locked == o.locked &&
                padNets == o.padNets;
     }
 };

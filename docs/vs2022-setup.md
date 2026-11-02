@@ -54,27 +54,27 @@ ctest --preset vs2026-debug
 
 如果当前机器使用 VS2022，将上述三个 `vs2026` 替换为 `vs2022`。
 
-## 4. 计划中的 CMake 目标
+## 4. CMake 目标
 
 | 目标 | 负责人 | 内容 |
 | --- | --- | --- |
 | `eda_core` | 成员 A | 模型、坐标、文件读写 |
-| `eda_ui` | 成员 B | wxWidgets 窗口、通用画布和编辑工具 |
-| `eda_pcb` | 成员 C | 网表、布局、布线、过孔和敷铜 |
-| `eda_app` | 全体 | 程序入口和模块装配 |
-| `eda_tests` | 全体 | 模型、导入和 PCB 业务测试 |
+| `pcbcore` | 成员 A、C | 当前统一核心库，包含模型、持久化和 PCB 业务 |
+| `eda_gui` | 成员 B、C | wxWidgets 窗口、PCB 画布和交互 |
+| `pcbdemo` | 成员 C | 无界面完整 PCB 流程演示 |
+| `validate_design` | 成员 C | 网表、封装库和设计样例一致性检查 |
+| `pcbtests` | 成员 A | 核心模型和文件往返测试 |
+| `pcbmembertests` | 成员 C | 导入、布局、布线、过孔、敷铜和连接验证 |
 
 依赖方向必须保持单向：
 
 ```text
-eda_ui  ─┐
-         ├──> eda_core
-eda_pcb ─┘
-
-eda_app ───> eda_ui, eda_pcb, eda_core
+eda_gui ─┐
+         ├──> pcbcore
+pcbdemo ─┘
 ```
 
-核心模型和 PCB 算法不得依赖 wxWidgets 控件。界面通过服务接口调用模型和业务模块。
+当前 `pcbcore` 不依赖 wxWidgets；图形界面通过 PCB 服务接口调用模型、导入、布局和布线模块。
 
 ## 5. 忽略文件
 

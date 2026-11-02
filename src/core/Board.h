@@ -52,10 +52,13 @@ struct CopperPour {
     std::string netId;
     std::string layerId;
     std::vector<Point> outline; // 多边形区域
+    std::vector<std::vector<Point>> holes; // 不同网络对象的避让孔
+    double clearance = 0.25;    // 基础铜间距（mm）
 
     bool operator==(const CopperPour& o) const {
         return id == o.id && netId == o.netId && layerId == o.layerId &&
-               outline == o.outline;
+               outline == o.outline && holes == o.holes &&
+               near(clearance, o.clearance);
     }
 };
 
