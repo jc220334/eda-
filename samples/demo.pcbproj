@@ -1,0 +1,207 @@
+{
+  "format": "PCB-Project",
+  "version": 1,
+  "unit": "mm",
+  "project": {
+    "name": "Demo Board",
+    "description": "示例 PCB 工程"
+  },
+  "board": {
+    "outline": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 50,
+        "y": 0
+      },
+      {
+        "x": 50,
+        "y": 40
+      },
+      {
+        "x": 0,
+        "y": 40
+      }
+    ],
+    "layers": [
+      {
+        "id": "F.Cu",
+        "name": "Top Copper",
+        "type": "copper",
+        "visible": true,
+        "order": 10,
+        "color": "#ff0000"
+      },
+      {
+        "id": "B.Cu",
+        "name": "Bottom Copper",
+        "type": "copper",
+        "visible": true,
+        "order": 20,
+        "color": "#0000ff"
+      },
+      {
+        "id": "F.Silk",
+        "name": "Top Silkscreen",
+        "type": "silkscreen",
+        "visible": true,
+        "order": 30,
+        "color": "#ffffff"
+      },
+      {
+        "id": "Edge",
+        "name": "Board Edge",
+        "type": "edge",
+        "visible": true,
+        "order": 40,
+        "color": "#ffff00"
+      }
+    ],
+    "layerGroups": [
+      {
+        "name": "Copper Layers",
+        "visible": true,
+        "layers": [
+          "F.Cu",
+          "B.Cu"
+        ]
+      },
+      {
+        "name": "Silk Layers",
+        "visible": true,
+        "layers": [
+          "F.Silk"
+        ]
+      }
+    ],
+    "nets": [
+      {
+        "id": "net:GND",
+        "name": "GND"
+      },
+      {
+        "id": "net:VCC",
+        "name": "VCC"
+      },
+      {
+        "id": "net:SIG",
+        "name": "SIG"
+      }
+    ],
+    "footprints": [
+      {
+        "id": "fp:R0603",
+        "name": "R0603",
+        "description": "0603 电阻封装",
+        "pads": [
+          {
+            "number": "1",
+            "name": "",
+            "pos": {
+              "x": -1,
+              "y": 0
+            },
+            "width": 0.9,
+            "height": 1,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "2",
+            "name": "",
+            "pos": {
+              "x": 1,
+              "y": 0
+            },
+            "width": 0.9,
+            "height": 1,
+            "shape": "rect",
+            "drill": 0
+          }
+        ]
+      }
+    ],
+    "components": [
+      {
+        "id": "cmp:R1",
+        "footprintId": "fp:R0603",
+        "reference": "R1",
+        "position": {
+          "x": 10,
+          "y": 10
+        },
+        "rotation": 0,
+        "onTop": true,
+        "padNets": [
+          {
+            "pad": "1",
+            "net": "net:GND"
+          },
+          {
+            "pad": "2",
+            "net": "net:SIG"
+          }
+        ]
+      }
+    ],
+    "traces": [
+      {
+        "id": "trc:1",
+        "net": "net:SIG",
+        "layer": "F.Cu",
+        "width": 0.2,
+        "points": [
+          {
+            "x": 11,
+            "y": 10
+          },
+          {
+            "x": 20,
+            "y": 10
+          }
+        ]
+      }
+    ],
+    "vias": [
+      {
+        "id": "via:1",
+        "net": "net:SIG",
+        "position": {
+          "x": 20,
+          "y": 10
+        },
+        "diameter": 0.6,
+        "drill": 0.3,
+        "fromLayer": "F.Cu",
+        "toLayer": "B.Cu"
+      }
+    ],
+    "copperPours": [
+      {
+        "id": "pour:1",
+        "net": "net:GND",
+        "layer": "B.Cu",
+        "outline": [
+          {
+            "x": 0,
+            "y": 0
+          },
+          {
+            "x": 50,
+            "y": 0
+          },
+          {
+            "x": 50,
+            "y": 40
+          },
+          {
+            "x": 0,
+            "y": 40
+          }
+        ]
+      }
+    ]
+  }
+}

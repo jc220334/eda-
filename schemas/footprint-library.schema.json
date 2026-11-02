@@ -1,0 +1,463 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:eda-course:footprint-library:1",
+  "title": "EDA Course Footprint Library",
+  "description": "课程 PCB 编辑器的元件封装库格式",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "units",
+    "footprints"
+  ],
+  "properties": {
+    "format": {
+      "const": "eda-course-footprint-library"
+    },
+    "version": {
+      "const": 1
+    },
+    "units": {
+      "const": "um"
+    },
+    "footprints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/footprint"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "point": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "size": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "integer",
+          "minimum": 1
+        }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "pointList": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "#/$defs/point"
+      }
+    },
+    "polygon": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "#/$defs/point"
+      }
+    },
+    "layer": {
+      "type": "string",
+      "enum": [
+        "F.Cu",
+        "B.Cu",
+        "*.Cu",
+        "F.Silk",
+        "B.Silk",
+        "F.Mask",
+        "B.Mask"
+      ]
+    },
+    "pad": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "shape",
+        "center",
+        "size",
+        "rotation_mdeg",
+        "layer_set",
+        "mount",
+        "drill_um",
+        "solder_mask_expand_um",
+        "copper_clearance_um"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "pin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonEmptyString"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        },
+        "shape": {
+          "enum": [
+            "rect",
+            "circle",
+            "oval",
+            "polygon"
+          ]
+        },
+        "center": {
+          "$ref": "#/$defs/point"
+        },
+        "size": {
+          "$ref": "#/$defs/size"
+        },
+        "rotation_mdeg": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 359999
+        },
+        "layer_set": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/layer"
+          }
+        },
+        "mount": {
+          "enum": [
+            "smd",
+            "plated_through",
+            "non_plated"
+          ]
+        },
+        "drill_um": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "solder_mask_expand_um": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "copper_clearance_um": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outline": {
+          "$ref": "#/$defs/polygon"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "shape": {
+                "const": "polygon"
+              }
+            },
+            "required": [
+              "shape"
+            ]
+          },
+          "then": {
+            "required": [
+              "outline"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mount": {
+                "const": "smd"
+              }
+            },
+            "required": [
+              "mount"
+            ]
+          },
+          "then": {
+            "required": [
+              "pin"
+            ],
+            "properties": {
+              "drill_um": {
+                "const": 0
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "mount": {
+                "enum": [
+                  "plated_through",
+                  "non_plated"
+                ]
+              }
+            },
+            "required": [
+              "mount"
+            ]
+          },
+          "then": {
+            "properties": {
+              "drill_um": {
+                "type": "integer",
+                "minimum": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "layer",
+        "start",
+        "end",
+        "width_um"
+      ],
+      "properties": {
+        "type": {
+          "const": "line"
+        },
+        "layer": {
+          "$ref": "#/$defs/layer"
+        },
+        "start": {
+          "$ref": "#/$defs/point"
+        },
+        "end": {
+          "$ref": "#/$defs/point"
+        },
+        "width_um": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "polyline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "layer",
+        "points",
+        "width_um"
+      ],
+      "properties": {
+        "type": {
+          "const": "polyline"
+        },
+        "layer": {
+          "$ref": "#/$defs/layer"
+        },
+        "points": {
+          "$ref": "#/$defs/pointList"
+        },
+        "width_um": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "circle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "layer",
+        "center",
+        "radius_um",
+        "width_um",
+        "filled"
+      ],
+      "properties": {
+        "type": {
+          "const": "circle"
+        },
+        "layer": {
+          "$ref": "#/$defs/layer"
+        },
+        "center": {
+          "$ref": "#/$defs/point"
+        },
+        "radius_um": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "width_um": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "filled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "arc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "layer",
+        "center",
+        "radius_um",
+        "start_mdeg",
+        "end_mdeg",
+        "width_um"
+      ],
+      "properties": {
+        "type": {
+          "const": "arc"
+        },
+        "layer": {
+          "$ref": "#/$defs/layer"
+        },
+        "center": {
+          "$ref": "#/$defs/point"
+        },
+        "radius_um": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "start_mdeg": {
+          "type": "integer"
+        },
+        "end_mdeg": {
+          "type": "integer"
+        },
+        "width_um": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "layer",
+        "text",
+        "position",
+        "height_um",
+        "rotation_mdeg"
+      ],
+      "properties": {
+        "type": {
+          "const": "text"
+        },
+        "layer": {
+          "$ref": "#/$defs/layer"
+        },
+        "text": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "position": {
+          "$ref": "#/$defs/point"
+        },
+        "height_um": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rotation_mdeg": {
+          "type": "integer"
+        }
+      }
+    },
+    "graphic": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/line"
+        },
+        {
+          "$ref": "#/$defs/polyline"
+        },
+        {
+          "$ref": "#/$defs/circle"
+        },
+        {
+          "$ref": "#/$defs/arc"
+        },
+        {
+          "$ref": "#/$defs/text"
+        }
+      ]
+    },
+    "footprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "category",
+        "description",
+        "origin",
+        "pads",
+        "graphics"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "category": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "description": {
+          "type": "string"
+        },
+        "origin": {
+          "$ref": "#/$defs/point"
+        },
+        "pads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/pad"
+          }
+        },
+        "graphics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/graphic"
+          }
+        }
+      }
+    }
+  }
+}

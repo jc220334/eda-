@@ -1,7 +1,0 @@
-<Solution>
-  <Configurations>
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
-  <Project Path="EDA.vcxproj" Id="ddaa11dc-6530-4be6-952e-6388246e3096" />
-</Solution>

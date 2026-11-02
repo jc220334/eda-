@@ -1,0 +1,412 @@
+{
+  "format": "PCB-Project",
+  "version": 1,
+  "unit": "mm",
+  "project": {
+    "name": "Imported PCB",
+    "description": "Imported from eda-course-netlist"
+  },
+  "board": {
+    "outline": [
+      {
+        "x": 0,
+        "y": 0
+      },
+      {
+        "x": 60,
+        "y": 0
+      },
+      {
+        "x": 60,
+        "y": 40
+      },
+      {
+        "x": 0,
+        "y": 40
+      }
+    ],
+    "layers": [
+      {
+        "id": "F.Cu",
+        "name": "Top Copper",
+        "type": "copper",
+        "visible": true,
+        "order": 10,
+        "color": "#d14b45"
+      },
+      {
+        "id": "B.Cu",
+        "name": "Bottom Copper",
+        "type": "copper",
+        "visible": true,
+        "order": 20,
+        "color": "#4b77d1"
+      },
+      {
+        "id": "F.Silk",
+        "name": "Top Silkscreen",
+        "type": "silkscreen",
+        "visible": true,
+        "order": 30,
+        "color": "#e8e8e8"
+      },
+      {
+        "id": "Edge",
+        "name": "Board Edge",
+        "type": "edge",
+        "visible": true,
+        "order": 40,
+        "color": "#e5c54d"
+      }
+    ],
+    "layerGroups": [
+      {
+        "name": "Copper Layers",
+        "visible": true,
+        "layers": [
+          "F.Cu",
+          "B.Cu"
+        ]
+      },
+      {
+        "name": "Silk Layers",
+        "visible": true,
+        "layers": [
+          "F.Silk"
+        ]
+      }
+    ],
+    "nets": [
+      {
+        "id": "net:VCC",
+        "name": "VCC"
+      },
+      {
+        "id": "net:GND",
+        "name": "GND"
+      },
+      {
+        "id": "net:SIG_IN",
+        "name": "SIG_IN"
+      },
+      {
+        "id": "net:SIG_OUT",
+        "name": "SIG_OUT"
+      }
+    ],
+    "footprints": [
+      {
+        "id": "SOIC-8_3.9x4.9mm_P1.27mm",
+        "name": "SOIC-8 3.9 x 4.9 mm, 1.27 mm pitch",
+        "description": "课程示意的八脚 SOIC 封装，不用于实际制造",
+        "pads": [
+          {
+            "number": "1",
+            "name": "1",
+            "pos": {
+              "x": -2.45,
+              "y": -1.905
+            },
+            "width": 1.5,
+            "height": 0.6,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "pos": {
+              "x": -2.45,
+              "y": -0.635
+            },
+            "width": 1.5,
+            "height": 0.6,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "3",
+            "name": "3",
+            "pos": {
+              "x": -2.45,
+              "y": 0.635
+            },
+            "width": 1.5,
+            "height": 0.6,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "4",
+            "name": "4",
+            "pos": {
+              "x": -2.45,
+              "y": 1.905
+            },
+            "width": 1.5,
+            "height": 0.6,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "5",
+            "name": "5",
+            "pos": {
+              "x": 2.45,
+              "y": 1.905
+            },
+            "width": 1.5,
+            "height": 0.6,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "6",
+            "name": "6",
+            "pos": {
+              "x": 2.45,
+              "y": 0.635
+            },
+            "width": 1.5,
+            "height": 0.6,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "7",
+            "name": "7",
+            "pos": {
+              "x": 2.45,
+              "y": -0.635
+            },
+            "width": 1.5,
+            "height": 0.6,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "8",
+            "name": "8",
+            "pos": {
+              "x": 2.45,
+              "y": -1.905
+            },
+            "width": 1.5,
+            "height": 0.6,
+            "shape": "rect",
+            "drill": 0
+          }
+        ]
+      },
+      {
+        "id": "R_0805_2012Metric",
+        "name": "R 0805",
+        "description": "课程示意的 0805 贴片电阻封装",
+        "pads": [
+          {
+            "number": "1",
+            "name": "1",
+            "pos": {
+              "x": -1.05,
+              "y": 0
+            },
+            "width": 0.9,
+            "height": 1.4,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "pos": {
+              "x": 1.05,
+              "y": 0
+            },
+            "width": 0.9,
+            "height": 1.4,
+            "shape": "rect",
+            "drill": 0
+          }
+        ]
+      },
+      {
+        "id": "C_0603_1608Metric",
+        "name": "C 0603",
+        "description": "课程示意的 0603 贴片电容封装",
+        "pads": [
+          {
+            "number": "1",
+            "name": "1",
+            "pos": {
+              "x": -0.8,
+              "y": 0
+            },
+            "width": 0.7,
+            "height": 0.9,
+            "shape": "rect",
+            "drill": 0
+          },
+          {
+            "number": "2",
+            "name": "2",
+            "pos": {
+              "x": 0.8,
+              "y": 0
+            },
+            "width": 0.7,
+            "height": 0.9,
+            "shape": "rect",
+            "drill": 0
+          }
+        ]
+      }
+    ],
+    "components": [
+      {
+        "id": "cmp:U1",
+        "footprintId": "SOIC-8_3.9x4.9mm_P1.27mm",
+        "reference": "U1",
+        "position": {
+          "x": 23,
+          "y": 20
+        },
+        "rotation": 0,
+        "onTop": true,
+        "locked": false,
+        "padNets": [
+          {
+            "pad": "8",
+            "net": "net:VCC"
+          },
+          {
+            "pad": "4",
+            "net": "net:GND"
+          },
+          {
+            "pad": "7",
+            "net": "net:GND"
+          },
+          {
+            "pad": "1",
+            "net": "net:SIG_IN"
+          },
+          {
+            "pad": "2",
+            "net": "net:SIG_IN"
+          },
+          {
+            "pad": "3",
+            "net": "net:SIG_OUT"
+          },
+          {
+            "pad": "5",
+            "net": "net:SIG_OUT"
+          }
+        ]
+      },
+      {
+        "id": "cmp:R1",
+        "footprintId": "R_0805_2012Metric",
+        "reference": "R1",
+        "position": {
+          "x": 30,
+          "y": 18.5
+        },
+        "rotation": 0,
+        "onTop": true,
+        "locked": false,
+        "padNets": [
+          {
+            "pad": "1",
+            "net": "net:VCC"
+          },
+          {
+            "pad": "2",
+            "net": "net:SIG_IN"
+          }
+        ]
+      },
+      {
+        "id": "cmp:R2",
+        "footprintId": "R_0805_2012Metric",
+        "reference": "R2",
+        "position": {
+          "x": 35,
+          "y": 18.5
+        },
+        "rotation": 0,
+        "onTop": true,
+        "locked": false,
+        "padNets": [
+          {
+            "pad": "2",
+            "net": "net:GND"
+          },
+          {
+            "pad": "1",
+            "net": "net:SIG_OUT"
+          }
+        ]
+      },
+      {
+        "id": "cmp:C1",
+        "footprintId": "C_0603_1608Metric",
+        "reference": "C1",
+        "position": {
+          "x": 39.5,
+          "y": 18.5
+        },
+        "rotation": 0,
+        "onTop": true,
+        "locked": false,
+        "padNets": [
+          {
+            "pad": "1",
+            "net": "net:VCC"
+          },
+          {
+            "pad": "2",
+            "net": "net:GND"
+          }
+        ]
+      }
+    ],
+    "traces": [
+      {
+        "id": "trc:auto:1",
+        "net": "net:SIG_IN",
+        "layer": "F.Cu",
+        "width": 0.3,
+        "points": [
+          {
+            "x": 20.55,
+            "y": 18.095
+          },
+          {
+            "x": 25,
+            "y": 14
+          },
+          {
+            "x": 20.55,
+            "y": 19.365
+          }
+        ]
+      }
+    ],
+    "vias": [
+      {
+        "id": "via:auto:1",
+        "net": "net:VCC",
+        "position": {
+          "x": 5,
+          "y": 35
+        },
+        "diameter": 0.6,
+        "drill": 0.3,
+        "fromLayer": "F.Cu",
+        "toLayer": "B.Cu"
+      }
+    ],
+    "copperPours": []
+  }
+}

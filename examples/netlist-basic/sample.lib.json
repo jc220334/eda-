@@ -1,0 +1,252 @@
+{
+  "format": "eda-course-footprint-library",
+  "version": 1,
+  "units": "um",
+  "footprints": [
+    {
+      "id": "SOIC-8_3.9x4.9mm_P1.27mm",
+      "name": "SOIC-8 3.9 x 4.9 mm, 1.27 mm pitch",
+      "category": "IC",
+      "description": "课程示意的八脚 SOIC 封装，不用于实际制造",
+      "origin": [0, 0],
+      "pads": [
+        {
+          "id": "U1-P1",
+          "pin": "1",
+          "name": "1",
+          "shape": "rect",
+          "center": [-2450, -1905],
+          "size": [1500, 600],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "U1-P2",
+          "pin": "2",
+          "name": "2",
+          "shape": "rect",
+          "center": [-2450, -635],
+          "size": [1500, 600],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "U1-P3",
+          "pin": "3",
+          "name": "3",
+          "shape": "rect",
+          "center": [-2450, 635],
+          "size": [1500, 600],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "U1-P4",
+          "pin": "4",
+          "name": "4",
+          "shape": "rect",
+          "center": [-2450, 1905],
+          "size": [1500, 600],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "U1-P5",
+          "pin": "5",
+          "name": "5",
+          "shape": "rect",
+          "center": [2450, 1905],
+          "size": [1500, 600],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "U1-P6",
+          "pin": "6",
+          "name": "6",
+          "shape": "rect",
+          "center": [2450, 635],
+          "size": [1500, 600],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "U1-P7",
+          "pin": "7",
+          "name": "7",
+          "shape": "rect",
+          "center": [2450, -635],
+          "size": [1500, 600],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "U1-P8",
+          "pin": "8",
+          "name": "8",
+          "shape": "rect",
+          "center": [2450, -1905],
+          "size": [1500, 600],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        }
+      ],
+      "graphics": [
+        {
+          "type": "polyline",
+          "layer": "F.Silk",
+          "points": [
+            [-1700, -2100],
+            [1700, -2100],
+            [1700, 2100],
+            [-1700, 2100],
+            [-1700, -2100]
+          ],
+          "width_um": 150
+        },
+        {
+          "type": "circle",
+          "layer": "F.Silk",
+          "center": [-1700, -2350],
+          "radius_um": 100,
+          "width_um": 100,
+          "filled": true
+        }
+      ]
+    },
+    {
+      "id": "R_0805_2012Metric",
+      "name": "R 0805",
+      "category": "Resistor",
+      "description": "课程示意的 0805 贴片电阻封装",
+      "origin": [0, 0],
+      "pads": [
+        {
+          "id": "R-P1",
+          "pin": "1",
+          "name": "1",
+          "shape": "rect",
+          "center": [-1050, 0],
+          "size": [900, 1400],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "R-P2",
+          "pin": "2",
+          "name": "2",
+          "shape": "rect",
+          "center": [1050, 0],
+          "size": [900, 1400],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        }
+      ],
+      "graphics": [
+        {
+          "type": "polyline",
+          "layer": "F.Silk",
+          "points": [
+            [-550, -650],
+            [550, -650],
+            [550, 650],
+            [-550, 650],
+            [-550, -650]
+          ],
+          "width_um": 150
+        }
+      ]
+    },
+    {
+      "id": "C_0603_1608Metric",
+      "name": "C 0603",
+      "category": "Capacitor",
+      "description": "课程示意的 0603 贴片电容封装",
+      "origin": [0, 0],
+      "pads": [
+        {
+          "id": "C-P1",
+          "pin": "1",
+          "name": "1",
+          "shape": "rect",
+          "center": [-800, 0],
+          "size": [700, 900],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        },
+        {
+          "id": "C-P2",
+          "pin": "2",
+          "name": "2",
+          "shape": "rect",
+          "center": [800, 0],
+          "size": [700, 900],
+          "rotation_mdeg": 0,
+          "layer_set": ["F.Cu"],
+          "mount": "smd",
+          "drill_um": 0,
+          "solder_mask_expand_um": 50,
+          "copper_clearance_um": 200
+        }
+      ],
+      "graphics": [
+        {
+          "type": "polyline",
+          "layer": "F.Silk",
+          "points": [
+            [-450, -400],
+            [450, -400],
+            [450, 400],
+            [-450, 400],
+            [-450, -400]
+          ],
+          "width_um": 150
+        }
+      ]
+    }
+  ]
+}

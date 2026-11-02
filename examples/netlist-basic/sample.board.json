@@ -1,0 +1,153 @@
+{
+  "format": "eda-course-board",
+  "version": 1,
+  "units": "um",
+  "name": "netlist_basic_demo",
+  "outline": [
+    [0, 0],
+    [60000, 0],
+    [60000, 40000],
+    [0, 40000],
+    [0, 0]
+  ],
+  "layers": [
+    {
+      "id": "F.Cu",
+      "name": "Top Copper",
+      "kind": "copper",
+      "index": 0,
+      "visible": true,
+      "color": "#C83434",
+      "locked": false
+    },
+    {
+      "id": "B.Cu",
+      "name": "Bottom Copper",
+      "kind": "copper",
+      "index": 1,
+      "visible": true,
+      "color": "#4D7FC4",
+      "locked": false
+    },
+    {
+      "id": "F.Silk",
+      "name": "Top Silkscreen",
+      "kind": "silkscreen",
+      "index": 2,
+      "visible": true,
+      "color": "#F0F0F0",
+      "locked": false
+    },
+    {
+      "id": "Edge.Cuts",
+      "name": "Board Outline",
+      "kind": "edge",
+      "index": 3,
+      "visible": true,
+      "color": "#F2D648",
+      "locked": true
+    }
+  ],
+  "layerGroups": [
+    {
+      "id": "top",
+      "name": "Top",
+      "layerIds": ["F.Cu", "F.Silk"]
+    },
+    {
+      "id": "bottom",
+      "name": "Bottom",
+      "layerIds": ["B.Cu"]
+    }
+  ],
+  "components": [
+    {
+      "id": "cmp-u1",
+      "ref": "U1",
+      "footprint": "SOIC-8_3.9x4.9mm_P1.27mm",
+      "value": "74HC00",
+      "position": [30000, 20000],
+      "rotation_mdeg": 0,
+      "side": "top",
+      "locked": false
+    },
+    {
+      "id": "cmp-r1",
+      "ref": "R1",
+      "footprint": "R_0805_2012Metric",
+      "value": "10k",
+      "position": [45000, 12000],
+      "rotation_mdeg": 0,
+      "side": "top",
+      "locked": false
+    },
+    {
+      "id": "cmp-r2",
+      "ref": "R2",
+      "footprint": "R_0805_2012Metric",
+      "value": "1k",
+      "position": [45000, 28000],
+      "rotation_mdeg": 0,
+      "side": "top",
+      "locked": false
+    },
+    {
+      "id": "cmp-c1",
+      "ref": "C1",
+      "footprint": "C_0603_1608Metric",
+      "value": "100nF",
+      "position": [14000, 31000],
+      "rotation_mdeg": 90000,
+      "side": "top",
+      "locked": false
+    }
+  ],
+  "nets": [
+    {
+      "id": "net-vcc",
+      "name": "VCC",
+      "trackWidthUm": 400,
+      "clearanceUm": 250,
+      "color": "#D9534F"
+    },
+    {
+      "id": "net-gnd",
+      "name": "GND",
+      "trackWidthUm": 500,
+      "clearanceUm": 250,
+      "color": "#5CB85C"
+    },
+    {
+      "id": "net-sig-in",
+      "name": "SIG_IN",
+      "trackWidthUm": 300,
+      "clearanceUm": 250,
+      "color": "#5BC0DE"
+    },
+    {
+      "id": "net-sig-out",
+      "name": "SIG_OUT",
+      "trackWidthUm": 300,
+      "clearanceUm": 250,
+      "color": "#F0AD4E"
+    }
+  ],
+  "connections": [
+    { "component": "cmp-u1", "pin": "8", "net": "net-vcc" },
+    { "component": "cmp-r1", "pin": "1", "net": "net-vcc" },
+    { "component": "cmp-c1", "pin": "1", "net": "net-vcc" },
+    { "component": "cmp-u1", "pin": "4", "net": "net-gnd" },
+    { "component": "cmp-u1", "pin": "7", "net": "net-gnd" },
+    { "component": "cmp-r2", "pin": "2", "net": "net-gnd" },
+    { "component": "cmp-c1", "pin": "2", "net": "net-gnd" },
+    { "component": "cmp-u1", "pin": "1", "net": "net-sig-in" },
+    { "component": "cmp-u1", "pin": "2", "net": "net-sig-in" },
+    { "component": "cmp-r1", "pin": "2", "net": "net-sig-in" },
+    { "component": "cmp-u1", "pin": "3", "net": "net-sig-out" },
+    { "component": "cmp-u1", "pin": "5", "net": "net-sig-out" },
+    { "component": "cmp-r2", "pin": "1", "net": "net-sig-out" }
+  ],
+  "tracks": [],
+  "vias": [],
+  "copperZones": []
+}
