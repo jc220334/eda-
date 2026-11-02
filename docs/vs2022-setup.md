@@ -1,12 +1,12 @@
 # Visual Studio 2022 开发约定
 
-项目采用 Visual Studio 2022、C++17 和 CMake。当前阶段只包含网表格式、样例和模型设计，源码实现开始后继续使用相同的 64 位工具链。
+项目采用 C++17 和 CMake，并提供 Visual Studio 2022 与 2026 的 x64 配置。当前机器实际安装的是 Visual Studio Community 2026；安装目录名为 `D:\2022`，不能只根据目录名判断 IDE 版本。
 
 ## 1. 本机已确认环境
 
 | 项目 | 当前路径或版本 |
 | --- | --- |
-| Visual Studio 2022 | `D:\2022` |
+| Visual Studio 2026（当前机器） | `D:\2022` |
 | MSVC 64 位工具链 | `D:\2022\VC` |
 | Visual Studio 自带 CMake | `D:\2022\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe` |
 | Visual Studio 自带 Ninja | `D:\2022\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja\ninja.exe` |
@@ -21,7 +21,8 @@
 - C++ 标准：C++17。
 - 编译器：MSVC v143 x64。
 - 构建系统：CMake。
-- 生成器：`Visual Studio 17 2022`，架构 `x64`。
+- 当前机器生成器：`Visual Studio 18 2026`，架构 `x64`。
+- 提供 `Visual Studio 17 2022` 配置，供安装 VS2022 的成员使用。
 - GUI：wxWidgets 3.2.2。
 - 绘图：`wxGraphicsContext` 配合双缓冲绘制。
 
@@ -29,7 +30,7 @@
 
 ## 3. Visual Studio 使用方式
 
-源码阶段使用 Visual Studio 的“打开本地文件夹”功能打开仓库根目录，由 CMake 负责配置，不手工维护 `.sln` 和 `.vcxproj`。
+使用 Visual Studio 的“打开本地文件夹”功能打开仓库根目录，由 CMake 负责配置，不手工维护 `.sln` 和 `.vcxproj`。
 
 配置目标：
 
@@ -38,24 +39,20 @@
 | Debug | x64 | 日常开发、断言和调试 |
 | Release | x64 | 最终演示和性能检查 |
 
-推荐在仓库根目录加入 `CMakePresets.json`，包含：
+仓库根目录的 `CMakePresets.json` 提供两组配置：
 
-```json
-{
-  "version": 6,
-  "configurePresets": [
-    {
-      "name": "vs2022-x64",
-      "displayName": "Visual Studio 2022 x64",
-      "generator": "Visual Studio 17 2022",
-      "architecture": "x64",
-      "binaryDir": "${sourceDir}/build/vs2022-x64"
-    }
-  ]
-}
+- `vs2026-x64`：当前机器直接使用。
+- `vs2022-x64`：安装 Visual Studio 2022 后使用。
+
+构建和测试命令：
+
+```powershell
+cmake --preset vs2026-x64
+cmake --build --preset vs2026-debug
+ctest --preset vs2026-debug
 ```
 
-该文件应在 `CMakeLists.txt` 和首个 C++ 目标建立时一并加入，避免引用不存在的目标。
+如果当前机器使用 VS2022，将上述三个 `vs2026` 替换为 `vs2022`。
 
 ## 4. 计划中的 CMake 目标
 

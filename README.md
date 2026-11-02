@@ -306,7 +306,17 @@ flowchart LR
 - [封装库 JSON Schema](schemas/footprint-library.schema.json)。
 - [PCB 工程 JSON Schema](schemas/board.schema.json)。
 
-可在仓库根目录运行 `python tools/validate_design.py`，检查样例中的元件、封装、引脚、网络和 PCB 工程引用是否一致。
+C++ 样例校验程序位于 `tools/validate_design.cpp`。使用 CMake 构建后运行 `validate_design`，可检查样例中的元件、封装、引脚、网络和 PCB 工程引用是否一致。
+
+当前机器使用：
+
+```powershell
+cmake --preset vs2026-x64
+cmake --build --preset vs2026-debug
+ctest --preset vs2026-debug
+```
+
+安装 Visual Studio 2022 的环境可改用 `vs2022-x64`、`vs2022-debug`。
 
 源码实现开始后，仓库将继续补充：
 

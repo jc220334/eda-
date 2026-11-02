@@ -55,14 +55,16 @@
 
 ## Visual Studio 2022 使用
 
-当前阶段是格式和模型设计。源码开始后，用 Visual Studio 2022 打开仓库根目录，并选择 x64 配置。工具链和路径约定见 [`docs/vs2022-setup.md`](../../docs/vs2022-setup.md)。
+使用 Visual Studio 打开仓库根目录后，可选择 `vs2026-x64` 或 `vs2022-x64` CMake 预设。工具链和路径约定见 [`docs/vs2022-setup.md`](../../docs/vs2022-setup.md)。
 
 不得用本机 MinGW `g++` 链接 `D:\wxwidgets\lib\vc_x64_lib` 中的 MSVC 库。
 
-在仓库根目录运行以下命令，可检查三个样例的结构及交叉引用：
+在仓库根目录使用 CMake 构建并运行 C++ 校验程序：
 
 ```powershell
-python tools/validate_design.py
+cmake --preset vs2026-x64
+cmake --build --preset vs2026-debug
+ctest --preset vs2026-debug
 ```
 
 成功时应输出：
