@@ -12,6 +12,11 @@
 
 namespace {
 
+wxString U8(const char* text)
+{
+    return wxString::FromUTF8(text);
+}
+
 wxColour ToColour(const pcb::Color& color, const wxColour& fallback)
 {
     const wxColour parsed(wxString::FromUTF8(color.hex));
@@ -49,7 +54,7 @@ void BoardCanvas::SetProject(pcb::PcbProject* project)
 void BoardCanvas::SetActiveLayer(const std::string& layerId)
 {
     m_activeLayer = layerId;
-    Notify("Active layer: " + wxString::FromUTF8(layerId));
+    Notify(U8("当前层：") + wxString::FromUTF8(layerId));
 }
 
 void BoardCanvas::ZoomIn()
@@ -407,8 +412,8 @@ void BoardCanvas::FinishManualRoute(const pcb::Point& endPoint)
     const pcb::ManualRouteResult result = pcb::RoutingService::addManualTrace(
         m_project->board, m_routeNetId, m_activeLayer, m_routeWidth, m_routePoints, 0.25);
     Notify(result.ok
-        ? wxString("Manual trace created")
-        : wxString::FromUTF8(result.message));
+        ? wxString::FromUTF8("手动走线已完成")
+        : wxString::FromUTF8("走线失败：") + wxString::FromUTF8(result.message));
     m_routing = false;
     m_routePoints.clear();
     m_routeNetId.clear();
@@ -429,7 +434,7 @@ void BoardCanvas::OnLeftDown(wxMouseEvent& event)
             FinishManualRoute(pad->position);
         } else {
             m_routePoints.push_back(model);
-            Notify("Routing point added. Click a matching pad to finish.");
+            Notify(wxString::FromUTF8("已添加走线拐点，请点击同网络焊盘完成。"));
             Refresh();
         }
         return;
@@ -441,9 +446,9 @@ void BoardCanvas::OnLeftDown(wxMouseEvent& event)
             m_routing = true;
             m_routeNetId = pad->netId;
             m_routePoints = {pad->position};
-            Notify("Manual route started from " +
+            Notify(wxString::FromUTF8("从焊盘 ") +
                    wxString::FromUTF8(pad->reference + "." + pad->padNumber) +
-                   ". Click points, then a matching pad.");
+                   wxString::FromUTF8(" 开始手动布线，请继续点击拐点或目标焊盘。"));
         }
         event.Skip();
         return;
@@ -455,7 +460,7 @@ void BoardCanvas::OnLeftDown(wxMouseEvent& event)
             component->position.y - model.y,
         };
         m_dragging = true;
-        Notify("Selected " + wxString::FromUTF8(component->reference));
+        Notify(wxString::FromUTF8("已选择元件：") + wxString::FromUTF8(component->reference));
         Refresh();
     } else {
         m_selectedComponentId.clear();
@@ -494,7 +499,8 @@ void BoardCanvas::OnRightDown(wxMouseEvent& event)
     if (const pcb::Component* component = HitComponent(ToModel(event.GetPosition()))) {
         pcb::LayoutService::rotateComponent(m_project->board, component->id, 90.0);
         m_selectedComponentId = component->id;
-        Notify("Rotated " + wxString::FromUTF8(component->reference) + " by 90 degrees");
+        Notify(wxString::FromUTF8("已将元件 ") + wxString::FromUTF8(component->reference) +
+               wxString::FromUTF8(" 旋转 90 度"));
         Refresh();
     }
 }
@@ -505,7 +511,7 @@ void BoardCanvas::OnKeyDown(wxKeyEvent& event)
         m_routing = false;
         m_routePoints.clear();
         m_routeNetId.clear();
-        Notify("Manual route cancelled");
+        Notify(wxString::FromUTF8("已取消手动布线"));
         Refresh();
         return;
     }

@@ -43,7 +43,7 @@ wxString U8(const char* text)
 } // namespace
 
 MainFrame::MainFrame(const std::filesystem::path& repositoryRoot)
-    : wxFrame(nullptr, wxID_ANY, "Untitled: (Untitled) - PCB Editor"),
+    : wxFrame(nullptr, wxID_ANY, U8("未命名: (未命名) - PCB 编辑器")),
       m_repositoryRoot(repositoryRoot)
 {
     SetMinSize(wxSize(980, 680));
@@ -65,7 +65,7 @@ void MainFrame::BuildInterface()
     wxPanel* sidebar = new wxPanel(splitter);
     sidebar->SetBackgroundColour(wxColour(245, 245, 245));
     wxBoxSizer* sidebarSizer = new wxBoxSizer(wxVERTICAL);
-    wxStaticText* layerTitle = new wxStaticText(sidebar, wxID_ANY, "Layers");
+    wxStaticText* layerTitle = new wxStaticText(sidebar, wxID_ANY, U8("图层"));
     wxFont titleFont = layerTitle->GetFont();
     titleFont.SetWeight(wxFONTWEIGHT_BOLD);
     layerTitle->SetFont(titleFont);
@@ -73,16 +73,16 @@ void MainFrame::BuildInterface()
     sidebarSizer->Add(new wxStaticLine(sidebar), 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
 
     wxArrayString layers;
-    layers.Add("Component");
-    layers.Add("solder");
-    layers.Add("outline");
-    layers.Add("spare");
-    layers.Add("top silk");
-    layers.Add("fat lines");
-    layers.Add("pins/pads");
-    layers.Add("vias");
-    layers.Add("far side");
-    layers.Add("solder mask");
+    layers.Add(U8("元件"));
+    layers.Add(U8("焊接层"));
+    layers.Add(U8("板框"));
+    layers.Add(U8("备用层"));
+    layers.Add(U8("顶层丝印"));
+    layers.Add(U8("粗线层"));
+    layers.Add(U8("引脚/焊盘"));
+    layers.Add(U8("过孔"));
+    layers.Add(U8("背面"));
+    layers.Add(U8("阻焊层"));
     m_layerList = new wxCheckListBox(
         sidebar, wxID_ANY, wxDefaultPosition, wxSize(-1, 250), layers);
     m_layerList->Check(0, true);
@@ -96,15 +96,15 @@ void MainFrame::BuildInterface()
     sidebarSizer->Add(m_layerList, 0, wxEXPAND | wxALL, 5);
 
     sidebarSizer->Add(new wxStaticLine(sidebar), 0, wxEXPAND | wxALL, 5);
-    wxStaticText* routeTitle = new wxStaticText(sidebar, wxID_ANY, "Route Style");
+    wxStaticText* routeTitle = new wxStaticText(sidebar, wxID_ANY, U8("布线样式"));
     routeTitle->SetFont(titleFont);
     sidebarSizer->Add(routeTitle, 0, wxALL | wxALIGN_LEFT, 8);
     sidebarSizer->Add(new wxStaticLine(sidebar), 0, wxEXPAND | wxLEFT | wxRIGHT, 5);
     wxArrayString routeChoices;
-    routeChoices.Add("Signal");
-    routeChoices.Add("Power");
+    routeChoices.Add(U8("信号"));
+    routeChoices.Add(U8("电源"));
     m_routeStyle = new wxRadioBox(
-        sidebar, wxID_ANY, "Style", wxDefaultPosition, wxDefaultSize,
+        sidebar, wxID_ANY, U8("样式"), wxDefaultPosition, wxDefaultSize,
         routeChoices, 1, wxRA_SPECIFY_COLS);
     m_routeStyle->SetSelection(0);
     sidebarSizer->Add(m_routeStyle, 0, wxEXPAND | wxALL, 10);
@@ -125,17 +125,17 @@ void MainFrame::BuildInterface()
     CreateStatusBar(4);
     const int statusWidths[] = {150, 150, 300, -1};
     SetStatusWidths(4, statusWidths);
-    SetStatusText("Grid: 10.00", 0);
-    SetStatusText("Unit: mil", 1);
-    SetStatusText("Clearance=20.00 trace=10.00 buffer=8.00", 2);
-    SetStatusText("Ready", 3);
+    SetStatusText(U8("网格: 10.00"), 0);
+    SetStatusText(U8("单位: mil"), 1);
+    SetStatusText(U8("间距=20.00 走线=10.00 缓冲=8.00"), 2);
+    SetStatusText(U8("就绪"), 3);
 
     wxToolBar* toolBar = CreateToolBar(wxTB_HORIZONTAL | wxTB_FLAT | wxTB_TEXT);
-    toolBar->AddTool(wxID_NEW, "New", wxArtProvider::GetBitmap(wxART_NEW));
-    toolBar->AddTool(wxID_OPEN, "Open", wxArtProvider::GetBitmap(wxART_FILE_OPEN));
+    toolBar->AddTool(wxID_NEW, U8("新建"), wxArtProvider::GetBitmap(wxART_NEW));
+    toolBar->AddTool(wxID_OPEN, U8("打开"), wxArtProvider::GetBitmap(wxART_FILE_OPEN));
     toolBar->AddSeparator();
-    toolBar->AddTool(wxID_ZOOM_IN, "Zoom In", wxArtProvider::GetBitmap(wxART_PLUS));
-    toolBar->AddTool(wxID_ZOOM_OUT, "Zoom Out", wxArtProvider::GetBitmap(wxART_MINUS));
+    toolBar->AddTool(wxID_ZOOM_IN, U8("放大"), wxArtProvider::GetBitmap(wxART_PLUS));
+    toolBar->AddTool(wxID_ZOOM_OUT, U8("缩小"), wxArtProvider::GetBitmap(wxART_MINUS));
     toolBar->Realize();
 
     Bind(wxEVT_TOOL, [this](wxCommandEvent&) { LoadSample(); }, wxID_NEW);
@@ -157,7 +157,7 @@ void MainFrame::BuildInterface()
     sampleMenu->Append(ID_SAMPLE_ROUTED, U8("03 - 自动布线"));
     sampleMenu->Append(ID_SAMPLE_COMPLETE, U8("04 - 完整敷铜与验证"));
     sampleMenu->Append(ID_SAMPLE_CORE, U8("05 - 核心模型演示"));
-    fileMenu->AppendSubMenu(sampleMenu, U8("Samples"));
+    fileMenu->AppendSubMenu(sampleMenu, U8("样例"));
     fileMenu->AppendSeparator();
     fileMenu->Append(wxID_EXIT, U8("退出"));
 
@@ -173,9 +173,9 @@ void MainFrame::BuildInterface()
     viewMenu->Append(ID_FIT_BOARD, U8("适合窗口"));
 
     wxMenuBar* menuBar = new wxMenuBar();
-    menuBar->Append(fileMenu, "File");
-    menuBar->Append(editMenu, "Edit");
-    menuBar->Append(viewMenu, "View");
+    menuBar->Append(fileMenu, U8("文件"));
+    menuBar->Append(editMenu, U8("编辑"));
+    menuBar->Append(viewMenu, U8("视图"));
     SetMenuBar(menuBar);
 
     Bind(wxEVT_MENU, [this](wxCommandEvent&) {
@@ -257,7 +257,7 @@ void MainFrame::OnLayerToggled(wxCommandEvent& event)
         break;
     }
     m_canvas->Refresh();
-    SetStatusText(visible ? "Layer visible" : "Layer hidden", 3);
+    SetStatusText(visible ? U8("图层已显示") : U8("图层已隐藏"), 3);
 }
 
 void MainFrame::OnLayerSelected(wxCommandEvent& event)
@@ -311,7 +311,7 @@ void MainFrame::LoadSample()
     const std::filesystem::path library =
         m_repositoryRoot / "examples" / "netlist-basic" / "sample.lib.json";
     if (LoadNetlistFiles(netlist.string(), library.string())) {
-        SetTitle("Untitled: (Imported PCB) - PCB Editor");
+        SetTitle(U8("未命名: (已导入 PCB) - PCB 编辑器"));
         Log(U8("已载入内置样例。左键点击焊盘开始手动布线，右键旋转元件。"));
     }
 }
@@ -333,7 +333,7 @@ void MainFrame::LoadSampleProject(
         m_canvas->SetProject(&m_project);
     }
     RefreshSidebar();
-    SetTitle(U8(fileName.c_str()) + " - PCB Editor");
+    SetTitle(U8(fileName.c_str()) + U8(" - PCB 编辑器"));
     Log(U8("已打开样例：") + description);
     if (m_canvas) {
         m_canvas->Refresh();
@@ -344,14 +344,14 @@ void MainFrame::ImportNetlist()
 {
     wxFileDialog dialog(
         this, U8("选择网表文件"), wxString::FromUTF8(m_repositoryRoot.u8string()), "",
-        "Netlist JSON (*.net.json;*.json)|*.json", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+        U8("网表 JSON (*.net.json;*.json)|*.json"), wxFD_OPEN | wxFD_FILE_MUST_EXIST);
     if (dialog.ShowModal() != wxID_OK) {
         return;
     }
     const std::filesystem::path library =
         m_repositoryRoot / "examples" / "netlist-basic" / "sample.lib.json";
     if (LoadNetlistFiles(dialog.GetPath().ToStdString(), library.string())) {
-        SetTitle(dialog.GetFilename() + " - PCB Editor");
+        SetTitle(dialog.GetFilename() + U8(" - PCB 编辑器"));
     }
 }
 
@@ -359,7 +359,7 @@ void MainFrame::OpenProject()
 {
     wxFileDialog dialog(
         this, U8("打开 PCB 工程"), wxString::FromUTF8(m_repositoryRoot.u8string()), "",
-        "PCB Project (*.pcbproj)|*.pcbproj|JSON files (*.json)|*.json",
+        U8("PCB 工程 (*.pcbproj)|*.pcbproj|JSON 文件 (*.json)|*.json"),
         wxFD_OPEN | wxFD_FILE_MUST_EXIST);
     if (dialog.ShowModal() != wxID_OK) {
         return;
@@ -374,7 +374,7 @@ void MainFrame::OpenProject()
     m_project = std::move(loadedProject);
     m_canvas->SetProject(&m_project);
     RefreshSidebar();
-    SetTitle(dialog.GetFilename() + " - PCB Editor");
+    SetTitle(dialog.GetFilename() + U8(" - PCB 编辑器"));
     Log(U8("工程已打开：") + dialog.GetPath());
 }
 
@@ -382,7 +382,7 @@ void MainFrame::SaveProject()
 {
     wxFileDialog dialog(
         this, U8("保存 PCB 工程"), wxString::FromUTF8(m_repositoryRoot.u8string()), "project.pcbproj",
-        "PCB Project (*.pcbproj)|*.pcbproj",
+        U8("PCB 工程 (*.pcbproj)|*.pcbproj"),
         wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
     if (dialog.ShowModal() != wxID_OK) {
         return;
@@ -409,8 +409,9 @@ void MainFrame::AutoRoute()
     const pcb::RouteResult result =
         pcb::RoutingService::autoRoute(m_project.board, 0.25);
     Log(wxString::Format(
-        U8("自动布线：%s；新增走线 %zu，过孔 %zu"),
-        wxString::FromUTF8(result.message), result.traceCount, result.viaCount));
+        result.ok ? U8("自动布线完成：新增走线 %zu，过孔 %zu")
+                  : U8("自动布线未全部完成：新增走线 %zu，过孔 %zu"),
+        result.traceCount, result.viaCount));
     if (!result.unresolvedNets.empty()) {
         wxString names;
         for (const std::string& name : result.unresolvedNets) {
