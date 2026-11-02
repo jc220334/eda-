@@ -15,6 +15,7 @@ private:
     void BuildInterface();
     void Log(const wxString& message);
     void LoadSample();
+    void LoadSampleProject(const std::string& fileName, const wxString& description);
     void ImportNetlist();
     void OpenProject();
     void SaveProject();

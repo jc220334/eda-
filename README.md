@@ -24,6 +24,16 @@ cmake --build --preset vs2026-debug
 
 在 Visual Studio 中打开仓库根目录，配置选择 `vs2026-debug`，启动目标选择 `eda_gui.exe`，按 `F5` 或 `Ctrl+F5` 运行。
 
+程序顶部“样例”菜单提供 5 个可直接体验的工程：
+
+- 导入与布局
+- 手动布线与过孔
+- 自动布线
+- 完整敷铜与验证
+- 核心模型演示
+
+说明见 [样例目录](samples/README.md)。
+
 无界面完整流程演示：
 
 ```powershell

@@ -14,6 +14,11 @@ namespace {
 
 enum {
     ID_LOAD_SAMPLE = wxID_HIGHEST + 100,
+    ID_SAMPLE_LAYOUT,
+    ID_SAMPLE_MANUAL,
+    ID_SAMPLE_ROUTED,
+    ID_SAMPLE_COMPLETE,
+    ID_SAMPLE_CORE,
     ID_IMPORT_NETLIST,
     ID_AUTO_PLACE,
     ID_AUTO_ROUTE,
@@ -124,11 +129,34 @@ void MainFrame::BuildInterface()
     editMenu->Append(ID_VALIDATE, U8("连接与间距检查"));
     editMenu->Append(ID_FIT_BOARD, U8("适合窗口"));
 
+    wxMenu* sampleMenu = new wxMenu();
+    sampleMenu->Append(ID_SAMPLE_LAYOUT, U8("01 - 导入与布局"));
+    sampleMenu->Append(ID_SAMPLE_MANUAL, U8("02 - 手动布线与过孔"));
+    sampleMenu->Append(ID_SAMPLE_ROUTED, U8("03 - 自动布线"));
+    sampleMenu->Append(ID_SAMPLE_COMPLETE, U8("04 - 完整敷铜与验证"));
+    sampleMenu->Append(ID_SAMPLE_CORE, U8("05 - 核心模型演示"));
+
     wxMenuBar* menuBar = new wxMenuBar();
     menuBar->Append(fileMenu, U8("文件"));
+    menuBar->Append(sampleMenu, U8("样例"));
     menuBar->Append(editMenu, "PCB");
     SetMenuBar(menuBar);
 
+    Bind(wxEVT_MENU, [this](wxCommandEvent&) {
+        LoadSampleProject("01-layout.pcbproj", U8("导入与自动布局样例"));
+    }, ID_SAMPLE_LAYOUT);
+    Bind(wxEVT_MENU, [this](wxCommandEvent&) {
+        LoadSampleProject("02-manual-routing.pcbproj", U8("手动布线与过孔样例"));
+    }, ID_SAMPLE_MANUAL);
+    Bind(wxEVT_MENU, [this](wxCommandEvent&) {
+        LoadSampleProject("03-auto-routing.pcbproj", U8("自动布线样例"));
+    }, ID_SAMPLE_ROUTED);
+    Bind(wxEVT_MENU, [this](wxCommandEvent&) {
+        LoadSampleProject("04-complete.pcbproj", U8("完整敷铜与连接验证样例"));
+    }, ID_SAMPLE_COMPLETE);
+    Bind(wxEVT_MENU, [this](wxCommandEvent&) {
+        LoadSampleProject("demo.pcbproj", U8("核心模型与持久化样例"));
+    }, ID_SAMPLE_CORE);
     Bind(wxEVT_MENU, [this](wxCommandEvent&) { Close(true); }, wxID_EXIT);
 }
 
@@ -175,6 +203,28 @@ void MainFrame::LoadSample()
         m_repositoryRoot / "examples" / "netlist-basic" / "sample.lib.json";
     if (LoadNetlistFiles(netlist.string(), library.string())) {
         Log(U8("已载入内置样例。左键点击焊盘开始手动布线，右键旋转元件。"));
+    }
+}
+
+void MainFrame::LoadSampleProject(
+    const std::string& fileName,
+    const wxString& description)
+{
+    const std::filesystem::path path = m_repositoryRoot / "samples" / fileName;
+    pcb::PcbProject loadedProject;
+    const pcb::LoadResult result =
+        pcb::ProjectIO::loadFromFile(path.string(), loadedProject);
+    if (!result.ok) {
+        Log(U8("样例打开失败：") + wxString::FromUTF8(result.error));
+        return;
+    }
+    m_project = std::move(loadedProject);
+    if (m_canvas) {
+        m_canvas->SetProject(&m_project);
+    }
+    Log(U8("已打开样例：") + description);
+    if (m_canvas) {
+        m_canvas->Refresh();
     }
 }
 

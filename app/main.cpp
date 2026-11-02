@@ -1,6 +1,9 @@
 #include "core/Project.h"
 #include "io/ProjectIO.h"
-#include "pcb/PcbWorkflow.h"
+#include "pcb/Geometry.h"
+#include "pcb/LayoutService.h"
+#include "pcb/NetlistImporter.h"
+#include "pcb/RoutingService.h"
 
 #include <filesystem>
 #include <iostream>
@@ -34,6 +37,17 @@ fs::path findRoot(const fs::path& start)
     return {};
 }
 
+bool saveProject(const PcbProject& project, const fs::path& path)
+{
+    std::string error;
+    if (!ProjectIO::saveToFile(project, path.string(), error)) {
+        std::cerr << "Save failed: " << path.u8string() << ": " << error << '\n';
+        return false;
+    }
+    std::cout << "Saved: " << path.u8string() << '\n';
+    return true;
+}
+
 } // namespace
 
 int main(int argc, char* argv[])
@@ -51,50 +65,89 @@ int main(int argc, char* argv[])
         root / "examples" / "netlist-basic" / "sample.net.json";
     const fs::path libraryPath =
         root / "examples" / "netlist-basic" / "sample.lib.json";
-    const fs::path outputPath = root / "samples" / "c-member-demo.pcbproj";
+    const fs::path samples = root / "samples";
 
-    PcbProject project;
-    const WorkflowResult workflow = PcbWorkflow::buildSample(
-        netlistPath.string(), libraryPath.string(), project);
-
-    std::cout << "===== PCB member C complete workflow =====\n";
-    for (const std::string& line : workflow.log) {
-        std::cout << line << '\n';
+    PcbProject layoutProject;
+    const NetlistImportResult imported =
+        NetlistImporter::importFiles(netlistPath.string(), libraryPath.string(), layoutProject);
+    if (!imported.ok) {
+        std::cerr << imported.summary() << '\n';
+        return 1;
     }
-
-    if (!workflow.import.ok) {
-        std::cerr << "Import failed.\n";
+    const LayoutResult layout = LayoutService::autoPlace(layoutProject.board, 3.0, 2.0, 0.5);
+    if (!layout.ok) {
+        std::cerr << "Layout failed: " << layout.message << '\n';
+        return 1;
+    }
+    if (!saveProject(layoutProject, samples / "01-layout.pcbproj")) {
         return 1;
     }
 
-    std::cout << "\nBoard summary\n"
-              << "  layers       : " << project.board.layers.layers().size() << '\n'
-              << "  nets         : " << project.board.nets.nets().size() << '\n'
-              << "  components   : " << project.board.components.size() << '\n'
-              << "  traces       : " << project.board.traces.size() << '\n'
-              << "  vias         : " << project.board.vias.size() << '\n'
-              << "  copper pours : " << project.board.copperPours.size() << '\n';
-
-    std::string error;
-    if (!ProjectIO::saveToFile(project, outputPath.string(), error)) {
-        std::cerr << "Save failed: " << error << '\n';
+    PcbProject manualProject = layoutProject;
+    if (const Net* signalInput = manualProject.board.findNetByName("SIG_IN")) {
+        const auto pads = collectPads(manualProject.board, signalInput->id);
+        if (pads.size() >= 2) {
+            const ManualRouteResult manual = RoutingService::addManualTrace(
+                manualProject.board, signalInput->id, "F.Cu", 0.30,
+                {pads[0].position, Point{25.0, 14.0}, pads[1].position}, 0.25);
+            std::cout << "Manual route: " << manual.message << '\n';
+        }
+    }
+    if (const Net* vcc = manualProject.board.findNetByName("VCC")) {
+        std::string error;
+        if (!RoutingService::placeVia(
+                manualProject.board, vcc->id, Point{5.0, 35.0},
+                "F.Cu", "B.Cu", 0.6, 0.3, error)) {
+            std::cerr << "Manual via failed: " << error << '\n';
+        }
+    }
+    if (!saveProject(manualProject, samples / "02-manual-routing.pcbproj")) {
         return 1;
     }
-    std::cout << "\nSaved project: " << outputPath.u8string() << '\n';
+
+    PcbProject routedProject = layoutProject;
+    const RouteResult routing = RoutingService::autoRoute(routedProject.board, 0.25);
+    std::cout << "Automatic routing: " << routing.message
+              << " (" << routing.traceCount << " traces, "
+              << routing.viaCount << " vias)\n";
+    if (!routing.ok) {
+        return 1;
+    }
+    if (!saveProject(routedProject, samples / "03-auto-routing.pcbproj")) {
+        return 1;
+    }
+
+    PcbProject completeProject = routedProject;
+    const Net* ground = completeProject.board.findNetByName("GND");
+    if (!ground) {
+        std::cerr << "GND net is missing.\n";
+        return 1;
+    }
+    std::string pourError;
+    if (!RoutingService::addGroundPour(
+            completeProject.board, ground->id, "B.Cu", 1.0, 0.30, pourError)) {
+        std::cerr << "Copper pour failed: " << pourError << '\n';
+        return 1;
+    }
+    const ValidationResult validation =
+        RoutingService::validate(completeProject.board, 0.25);
+    std::cout << "Validation: " << validation.summary() << '\n';
+    if (!validation.ok) {
+        return 1;
+    }
+    if (!saveProject(completeProject, samples / "04-complete.pcbproj") ||
+        !saveProject(completeProject, samples / "c-member-demo.pcbproj")) {
+        return 1;
+    }
 
     PcbProject reloaded;
-    const LoadResult loaded = ProjectIO::loadFromFile(outputPath.string(), reloaded);
-    if (!loaded.ok || reloaded != project) {
-        std::cerr << "Saved project verification failed";
-        if (!loaded.ok) {
-            std::cerr << ": " << loaded.error;
-        }
-        std::cerr << '\n';
+    const LoadResult loaded =
+        ProjectIO::loadFromFile((samples / "04-complete.pcbproj").string(), reloaded);
+    if (!loaded.ok || reloaded != completeProject) {
+        std::cerr << "Round-trip verification failed.\n";
         return 1;
     }
-
     std::cout << "Round-trip verification: OK\n";
-    std::cout << "Workflow result: "
-              << (workflow.ok ? "PASS" : "CHECK VALIDATION ISSUES") << '\n';
-    return workflow.ok ? 0 : 2;
+    std::cout << "Sample generation: PASS\n";
+    return 0;
 }

@@ -208,6 +208,31 @@ int main(int argc, char* argv[])
         PcbWorkflow::buildSample(netlist.string(), library.string(), sample);
     Check(workflow.ok, "complete PCB sample workflow succeeds");
 
+    struct SampleExpectation {
+        const char* fileName;
+        std::size_t traces;
+        std::size_t vias;
+        std::size_t pours;
+    };
+    const SampleExpectation samples[] = {
+        {"01-layout.pcbproj", 0, 0, 0},
+        {"02-manual-routing.pcbproj", 1, 1, 0},
+        {"03-auto-routing.pcbproj", 9, 4, 0},
+        {"04-complete.pcbproj", 9, 4, 1},
+    };
+    for (const SampleExpectation& expectation : samples) {
+        PcbProject loadedSample;
+        const LoadResult loadSample = ProjectIO::loadFromFile(
+            (root / "samples" / expectation.fileName).string(), loadedSample);
+        Check(loadSample.ok, std::string("sample loads: ") + expectation.fileName);
+        if (loadSample.ok) {
+            Check(loadedSample.board.traces.size() == expectation.traces &&
+                      loadedSample.board.vias.size() == expectation.vias &&
+                      loadedSample.board.copperPours.size() == expectation.pours,
+                  std::string("sample content matches: ") + expectation.fileName);
+        }
+    }
+
     std::cout << "\nMember C tests: " << gPassed << " passed, " << gFailed << " failed\n";
     return gFailed == 0 ? 0 : 1;
 }
