@@ -1,0 +1,396 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:eda-course:board:1",
+  "title": "EDA Course PCB Board",
+  "description": "课程 PCB 编辑器的工程文件格式",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "units",
+    "name",
+    "outline",
+    "layers",
+    "layerGroups",
+    "components",
+    "nets",
+    "connections",
+    "tracks",
+    "vias",
+    "copperZones"
+  ],
+  "properties": {
+    "format": {
+      "const": "eda-course-board"
+    },
+    "version": {
+      "const": 1
+    },
+    "units": {
+      "const": "um"
+    },
+    "name": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "outline": {
+      "$ref": "#/$defs/polygon"
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/layer"
+      }
+    },
+    "layerGroups": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/layerGroup"
+      }
+    },
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/component"
+      }
+    },
+    "nets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/net"
+      }
+    },
+    "connections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/connection"
+      }
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/track"
+      }
+    },
+    "vias": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/via"
+      }
+    },
+    "copperZones": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/copperZone"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "point": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "polygon": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "#/$defs/point"
+      }
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "kind",
+        "index",
+        "visible",
+        "color",
+        "locked"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "kind": {
+          "enum": [
+            "copper",
+            "silkscreen",
+            "edge",
+            "other"
+          ]
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        },
+        "locked": {
+          "type": "boolean"
+        }
+      }
+    },
+    "layerGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "layerIds"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "layerIds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ref",
+        "footprint",
+        "position",
+        "rotation_mdeg",
+        "side",
+        "locked"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "ref": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "footprint": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "position": {
+          "$ref": "#/$defs/point"
+        },
+        "rotation_mdeg": {
+          "enum": [
+            0,
+            90000,
+            180000,
+            270000
+          ]
+        },
+        "side": {
+          "enum": [
+            "top",
+            "bottom"
+          ]
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "net": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "trackWidthUm",
+        "clearanceUm"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "trackWidthUm": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "clearanceUm": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "component",
+        "pin",
+        "net"
+      ],
+      "properties": {
+        "component": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "pin": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "net": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "track": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "net",
+        "layer",
+        "widthUm",
+        "points"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "net": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "layer": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "widthUm": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "points": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/point"
+          }
+        }
+      }
+    },
+    "via": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "net",
+        "position",
+        "outerDiameterUm",
+        "drillDiameterUm",
+        "fromLayer",
+        "toLayer"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "net": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "position": {
+          "$ref": "#/$defs/point"
+        },
+        "outerDiameterUm": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "drillDiameterUm": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "fromLayer": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "toLayer": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "copperZone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "net",
+        "layer",
+        "outer",
+        "holes",
+        "clearanceUm",
+        "fillMode"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "net": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "layer": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "outer": {
+          "$ref": "#/$defs/polygon"
+        },
+        "holes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/polygon"
+          }
+        },
+        "clearanceUm": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fillMode": {
+          "enum": [
+            "solid",
+            "hatch"
+          ]
+        }
+      }
+    }
+  }
+}

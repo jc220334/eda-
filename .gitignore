@@ -1,0 +1,13 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# CMake and build output
+build/
+out/
+CMakeUserPresets.json
+
+# Runtime output
+*.log
+*.tmp
