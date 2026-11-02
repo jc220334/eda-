@@ -23,8 +23,6 @@ add_executable(validate_design
 )
 target_include_directories(validate_design PRIVATE tools)
 
-set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT validate_design)
-
 # ==================== PCB 核心数据模型与持久化 ====================
 add_library(pcbcore STATIC
     src/io/Json.cpp
@@ -37,6 +35,8 @@ target_link_libraries(pcbtests PRIVATE pcbcore)
 
 add_executable(pcbdemo app/main.cpp)
 target_link_libraries(pcbdemo PRIVATE pcbcore)
+
+set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT pcbdemo)
 
 # ==================== 测试 ====================
 enable_testing()
