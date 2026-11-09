@@ -53,14 +53,19 @@ if(EDA_BUILD_GUI)
     set(wxWidgets_CONFIGURATION mswu CACHE STRING "wxWidgets library configuration")
     set(wxWidgets_USE_STATIC ON)
     set(wxWidgets_USE_REL_AND_DBG ON)
-    find_package(wxWidgets REQUIRED COMPONENTS core base adv)
+    find_package(wxWidgets REQUIRED COMPONENTS core base adv xml propgrid)
     include(${wxWidgets_USE_FILE})
 
     add_executable(eda_gui WIN32
-        main.cpp
+        eda-work/src/main.cpp
     )
     target_link_libraries(eda_gui PRIVATE ${wxWidgets_LIBRARIES})
     target_include_directories(eda_gui PRIVATE ${wxWidgets_INCLUDE_DIRS})
+
+    add_executable(eda_library_tests eda-work/test/model_test.cpp)
+    target_link_libraries(eda_library_tests PRIVATE ${wxWidgets_LIBRARIES})
+    target_include_directories(eda_library_tests PRIVATE ${wxWidgets_INCLUDE_DIRS})
+    add_test(NAME eda_library_tests COMMAND eda_library_tests)
 
     set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT eda_gui)
 else()
