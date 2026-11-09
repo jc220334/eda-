@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eda-library version="1.0" name="Sample Library">
+  <footprint name="SOIC-8_Renamed" uid="fp-6af18aa1-0001-0041" category="IC / SMD" description="8-pin SOIC, 1.27 mm pitch, 3.9 x 4.9 mm body" unit="mm" keywords="soic sop smd 8pin 1.27">
+    <pad number="A1" x="-2.7000" y="-1.9050" w="1.5000" h="0.6000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="2" x="-2.7000" y="-0.6350" w="1.5000" h="0.6000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="3" x="-2.7000" y="0.6350" w="1.5000" h="0.6000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="4" x="-2.7000" y="1.9050" w="1.5000" h="0.6000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="8" x="2.7000" y="-1.9050" w="1.5000" h="0.6000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="7" x="2.7000" y="-0.6350" w="1.5000" h="0.6000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="6" x="2.7000" y="0.6350" w="1.5000" h="0.6000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="5" x="2.7000" y="1.9050" w="1.5000" h="0.6000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <shape type="Rectangle" layer="silk" stroke="#966E0A" fill="none" width="0.1500" rotation="15.0000" x="-1.9500" y="-2.4500" w="3.9000" h="4.9000"/>
+    <shape type="Circle" layer="silk" stroke="#966E0A" fill="#966E0A" width="0.1000" rotation="0.0000" x="-1.5500" y="-2.2000" w="0.5000" h="0.5000"/>
+    <shape type="Text" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x="-1.8000" y="2.6000" size="0.9000" text="SOIC-8"/>
+  </footprint>
+  <footprint name="R_0603" uid="fp-6af18aa1-0002-8467" category="Passive / SMD" description="0603 chip resistor / capacitor, 1.6 x 0.8 mm" unit="mm" keywords="0603 resistor capacitor passive smd chip">
+    <pad number="1" x="-0.8000" y="0.0000" w="0.8000" h="0.9500" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="2" x="0.8000" y="0.0000" w="0.8000" h="0.9500" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <shape type="Rectangle" layer="silk" stroke="#966E0A" fill="none" width="0.1200" rotation="0.0000" x="-0.8000" y="-0.4500" w="1.6000" h="0.9000"/>
+    <shape type="Text" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x="-0.4500" y="-1.3500" size="0.8000" text="R?"/>
+  </footprint>
+  <footprint name="DIP-8_W7.62mm" uid="fp-6af18aa1-0003-6334" category="IC / THT" description="8-pin DIP, 2.54 mm pitch, 7.62 mm row spacing" unit="mm" keywords="dip dip8 through hole tht 2.54 8pin">
+    <pad number="1" x="-3.8100" y="-3.8100" w="1.8000" h="1.8000" rotation="0.0000" drill="0.9000" type="tht" shape="round" layer="top"/>
+    <pad number="2" x="-3.8100" y="-1.2700" w="1.8000" h="1.8000" rotation="0.0000" drill="0.9000" type="tht" shape="round" layer="top"/>
+    <pad number="3" x="-3.8100" y="1.2700" w="1.8000" h="1.8000" rotation="0.0000" drill="0.9000" type="tht" shape="round" layer="top"/>
+    <pad number="4" x="-3.8100" y="3.8100" w="1.8000" h="1.8000" rotation="0.0000" drill="0.9000" type="tht" shape="round" layer="top"/>
+    <pad number="8" x="3.8100" y="-3.8100" w="1.8000" h="1.8000" rotation="0.0000" drill="0.9000" type="tht" shape="round" layer="top"/>
+    <pad number="7" x="3.8100" y="-1.2700" w="1.8000" h="1.8000" rotation="0.0000" drill="0.9000" type="tht" shape="round" layer="top"/>
+    <pad number="6" x="3.8100" y="1.2700" w="1.8000" h="1.8000" rotation="0.0000" drill="0.9000" type="tht" shape="round" layer="top"/>
+    <pad number="5" x="3.8100" y="3.8100" w="1.8000" h="1.8000" rotation="0.0000" drill="0.9000" type="tht" shape="round" layer="top"/>
+    <shape type="Rectangle" layer="silk" stroke="#966E0A" fill="none" width="0.1500" rotation="0.0000" x="-3.1750" y="-4.6350" w="6.3500" h="9.2700"/>
+    <shape type="Arc" layer="silk" stroke="#966E0A" fill="none" width="0.1500" rotation="0.0000" cx="0.0000" cy="-4.6350" radius="0.7500" start="0.0000" sweep="180.0000"/>
+    <shape type="Circle" layer="silk" stroke="#966E0A" fill="#966E0A" width="0.1000" rotation="0.0000" x="-3.2000" y="-4.1000" w="0.4500" h="0.4500"/>
+    <shape type="Text" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x="-2.1000" y="5.0000" size="1.0000" text="DIP-8"/>
+  </footprint>
+  <footprint name="QFP-32_7x7mm" uid="fp-6af18aa1-0004-6500" category="IC / SMD" description="32-pin QFP, 0.8 mm pitch, 7 x 7 mm body" unit="mm" keywords="qfp qfp32 smd 0.8 32pin">
+    <pad number="1" x="-3.6500" y="-2.8000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="2" x="-3.6500" y="-2.0000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="3" x="-3.6500" y="-1.2000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="4" x="-3.6500" y="-0.4000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="5" x="-3.6500" y="0.4000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="6" x="-3.6500" y="1.2000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="7" x="-3.6500" y="2.0000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="8" x="-3.6500" y="2.8000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="9" x="-2.8000" y="3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="10" x="-2.0000" y="3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="11" x="-1.2000" y="3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="12" x="-0.4000" y="3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="13" x="0.4000" y="3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="14" x="1.2000" y="3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="15" x="2.0000" y="3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="16" x="2.8000" y="3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="17" x="3.6500" y="2.8000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="18" x="3.6500" y="2.0000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="19" x="3.6500" y="1.2000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="20" x="3.6500" y="0.4000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="21" x="3.6500" y="-0.4000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="22" x="3.6500" y="-1.2000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="23" x="3.6500" y="-2.0000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="24" x="3.6500" y="-2.8000" w="1.5000" h="0.3000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="25" x="2.8000" y="-3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="26" x="2.0000" y="-3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="27" x="1.2000" y="-3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="28" x="0.4000" y="-3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="29" x="-0.4000" y="-3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="30" x="-1.2000" y="-3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="31" x="-2.0000" y="-3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="32" x="-2.8000" y="-3.6500" w="0.3000" h="1.5000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <shape type="Rectangle" layer="silk" stroke="#966E0A" fill="none" width="0.1200" rotation="0.0000" x="-2.9000" y="-2.9000" w="5.8000" h="5.8000"/>
+    <shape type="Circle" layer="silk" stroke="#966E0A" fill="#966E0A" width="0.1000" rotation="0.0000" x="-2.4000" y="-2.4000" w="0.4500" h="0.4500"/>
+    <shape type="Text" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x="-1.5000" y="-4.9000" size="1.0000" text="QFP-32"/>
+  </footprint>
+  <footprint name="SOT-23" uid="fp-6af18aa1-0005-9169" category="Transistor / SMD" description="3-pin SOT-23 transistor, 0.95 mm pitch" unit="mm" keywords="sot23 sot-23 transistor smd 3pin">
+    <pad number="1" x="-1.0000" y="-0.9500" w="1.0000" h="0.8000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="2" x="-1.0000" y="0.9500" w="1.0000" h="0.8000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <pad number="3" x="1.0000" y="0.0000" w="1.0000" h="0.8000" rotation="0.0000" drill="0.0000" type="smd" shape="rect" layer="top"/>
+    <shape type="Rectangle" layer="silk" stroke="#966E0A" fill="none" width="0.1200" rotation="0.0000" x="-0.7000" y="-1.4000" w="1.4000" h="2.8000"/>
+    <shape type="Text" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x="-0.7000" y="-2.4000" size="0.8000" text="Q?"/>
+  </footprint>
+  <footprint name="Header-1x4_2.54mm" uid="fp-6af18aa1-0006-5724" category="Connector / THT" description="4-pin 2.54 mm vertical pin header, oval pads" unit="mm" keywords="header connector 2.54 4pin tht pin">
+    <pad number="1" x="0.0000" y="-3.8100" w="1.7000" h="1.7000" rotation="0.0000" drill="1.0000" type="tht" shape="oval" layer="top"/>
+    <pad number="2" x="0.0000" y="-1.2700" w="1.7000" h="1.7000" rotation="0.0000" drill="1.0000" type="tht" shape="oval" layer="top"/>
+    <pad number="3" x="0.0000" y="1.2700" w="1.7000" h="1.7000" rotation="0.0000" drill="1.0000" type="tht" shape="oval" layer="top"/>
+    <pad number="4" x="0.0000" y="3.8100" w="1.7000" h="1.7000" rotation="0.0000" drill="1.0000" type="tht" shape="oval" layer="top"/>
+    <shape type="Rectangle" layer="silk" stroke="#966E0A" fill="none" width="0.1200" rotation="0.0000" x="-0.8500" y="-4.7500" w="1.7000" h="9.5000"/>
+    <shape type="Text" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x="-1.6000" y="5.1000" size="0.9000" text="J?"/>
+  </footprint>
+  <footprint name="LED-0805" uid="fp-6af18aa1-0007-1478" category="LED / SMD" description="0805 LED, oval pads, cathode marked on silkscreen" unit="mm" keywords="led 0805 smd diode light">
+    <pad number="1" x="-0.9000" y="0.0000" w="1.0000" h="1.4000" rotation="0.0000" drill="0.0000" type="smd" shape="oval" layer="top"/>
+    <pad number="2" x="0.9000" y="0.0000" w="1.0000" h="1.4000" rotation="0.0000" drill="0.0000" type="smd" shape="oval" layer="top"/>
+    <shape type="Rectangle" layer="silk" stroke="#966E0A" fill="none" width="0.1200" rotation="0.0000" x="-0.7000" y="-0.6000" w="1.4000" h="1.2000"/>
+    <shape type="Line" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x1="-0.7000" y1="-0.7500" x2="-0.7000" y2="0.7500"/>
+    <shape type="Text" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x="-0.6000" y="-1.6000" size="0.8000" text="D?"/>
+  </footprint>
+  <footprint name="TestPoint_1.0mm" uid="fp-6af18aa1-0008-9358" category="Test Point" description="Single through-hole test point, 1.0 mm drill" unit="mm" keywords="test point probe tht 1pin">
+    <pad number="1" x="0.0000" y="0.0000" w="2.0000" h="2.0000" rotation="0.0000" drill="1.0000" type="tht" shape="round" layer="top"/>
+    <shape type="Circle" layer="silk" stroke="#966E0A" fill="none" width="0.1500" rotation="0.0000" x="-1.5000" y="-1.5000" w="3.0000" h="3.0000"/>
+    <shape type="Text" layer="silk" stroke="#966E0A" fill="none" width="0.2000" rotation="0.0000" x="-1.2000" y="1.8000" size="0.9000" text="TP?"/>
+  </footprint>
+</eda-library>
