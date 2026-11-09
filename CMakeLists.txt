@@ -57,14 +57,10 @@ if(EDA_BUILD_GUI)
     include(${wxWidgets_USE_FILE})
 
     add_executable(eda_gui WIN32
-        app/gui_main.cpp
-        src/ui/BoardCanvas.cpp
-        src/ui/BoardCanvas.h
-        src/ui/MainFrame.cpp
-        src/ui/MainFrame.h
+        main.cpp
     )
-    target_link_libraries(eda_gui PRIVATE pcbcore ${wxWidgets_LIBRARIES})
-    target_include_directories(eda_gui PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${wxWidgets_INCLUDE_DIRS})
+    target_link_libraries(eda_gui PRIVATE ${wxWidgets_LIBRARIES})
+    target_include_directories(eda_gui PRIVATE ${wxWidgets_INCLUDE_DIRS})
 
     set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT eda_gui)
 else()
